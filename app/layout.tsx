@@ -6,6 +6,7 @@ import { ThemeProvider,createTheme } from '@mui/material/styles';
 import { Provider } from 'react-redux'
 import { store } from './store';
 import Layout from './_component/Layout';
+import Background from './_component/Background';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} >
       <Provider store={store}>
         <Layout>{children}</Layout>
         </Provider>

@@ -16,7 +16,7 @@ interface Props {
 
 export default function Background({
   children,
-  height = "100vh",
+  height = "auto",
 }: Props) {
 
     const currentTheme = useSelector((state: RootState) => state.theme.currentTheme)
@@ -34,6 +34,7 @@ export default function Background({
         background: bg,
         paddingY: 2,
         height: height,
+        minHeight : '100vh'
       }}
     >
       {children}
