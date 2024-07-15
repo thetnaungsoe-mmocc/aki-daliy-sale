@@ -102,6 +102,7 @@ export default function MainScreen() {
 
   const onSubmit = (data: any) => {
     console.log("form data >> ", data);
+    console.log("form data >> ", data);
   };
 
   const watchAllFields = watch();
