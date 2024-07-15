@@ -42,17 +42,17 @@ function Price({ control, index ,setValue}: any){
     });
     let qty = value.qty
     let finalPrice = 0
-    if(value.id == "item1"){
+    if(value.id == "food1"){
       finalPrice = qty * 2500
-    }else if(value.id == "item2"){
+    }else if(value.id == "food2"){
       finalPrice = qty * 1500
-    }else if(value.id == "item3"){
+    }else if(value.id == "food3"){
       finalPrice = qty * 1500
-    }else if(value.id == "item4"){
+    }else if(value.id == "food4"){
       finalPrice = qty * 1500
-    }else if(value.id == "item5"){
+    }else if(value.id == "food5"){
       finalPrice = qty * 3000 
-    }else if(value.id == "item6"){
+    }else if(value.id == "food6"){
       finalPrice = qty * 1300
     }
   

@@ -40,34 +40,7 @@ function a11yProps(index: number) {
   };
 }
 
-function Price({ control, index, setValue }: any) {
-  const value = useWatch({
-    control,
-    name: `formData.foods.detail[${index}]`,
-    // defaultValue: {}
-  });
-  let qty = value.qty;
-  let finalPrice = 0;
-  if (value.id == "item1") {
-    finalPrice = qty * 2500;
-  } else if (value.id == "item2") {
-    finalPrice = qty * 1500;
-  } else if (value.id == "item3") {
-    finalPrice = qty * 1500;
-  } else if (value.id == "item4") {
-    finalPrice = qty * 1500;
-  } else if (value.id == "item5") {
-    finalPrice = qty * 3000;
-  } else if (value.id == "item6") {
-    finalPrice = qty * 1300;
-  }
 
-  useEffect(() => {
-    setValue(`formData.foods.detail[${index}].price` as any, finalPrice);
-  }, [finalPrice]);
-
-  return <TableCell align="right">{finalPrice}</TableCell>;
-}
 
 export default function MainScreen() {
   const [tabValue, setTabValue] = React.useState(0);
@@ -102,7 +75,7 @@ export default function MainScreen() {
 
   const onSubmit = (data: any) => {
     console.log("form data >> ", data);
-    console.log("form data >> ", data);
+    // console.log("form data >> ", data);s
   };
 
   const watchAllFields = watch();
