@@ -9,109 +9,72 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useWatch } from "react-hook-form";
-import { Button, Input, Stack, TextField,Box} from "@mui/material";
-import { useEffect , useState} from "react";
+import { Button, Input, Stack, TextField, Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { FormValues, FormValues2, TabPanelProps } from "./type";
+import { defaultValue, defaultValue2 } from "./const";
+import FoodTable from "./_components/FoodTable";
 
-// import { ErrorMessage } from "@hookform/error-message";
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
 
-type FormValues = {
-  formData: {
-    id: string;
-    item: string;
-    qty: number | null;
-    price: number | null;
-  }[];
-};
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
 
-const defaultValue = [
-  {
-    id: "item1",
-    item: "တာကိုရာကီ",
-    qty: 0,
-    price: null,
-  },
-  {
-    id: "item2",
-    item: "တော့ပိုကီ",
-    qty: 0,
-    price: null,
-  },
-  {
-    id: "item3",
-    item: "ငါးအသားပြား",
-    qty: 0,
-    price: null,
-  },
-  {
-    id: "item4",
-    item: "ငါးပေါင်မုန့်",
-    qty: 0,
-    price: null,
-  },
-  {
-    id: "item5",
-    item: "ဟမ်ဘာကာ",
-    qty: 0,
-    price: null,
-  },
-  {
-    id: "item6",
-    item: "ငုံးဉကျော်",
-    qty: 0,
-    price: null,
-  },
-];
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
-function Price({ control, index ,setValue}: any){
+function Price({ control, index, setValue }: any) {
   const value = useWatch({
     control,
-    name: `formData[${index}]`,
+    name: `formData.foods.detail[${index}]`,
     // defaultValue: {}
   });
-  // console.log(value)
-  let finalPrice = 0
-  if(value.id == "item1"){
-    finalPrice = value.qty
-  }else if(value.id == "item2"){
-    finalPrice = value.qty * 1500
-  }else if(value.id == "item3"){
-    finalPrice = value.qty * 1500
-  }else if(value.id == "item4"){
-    finalPrice = value.qty * 1500
-  }else if(value.id == "item5"){
-    finalPrice = value.qty * 3000 
-  }else if(value.id == "item6"){
-    finalPrice = value.qty * 1300
+  let qty = value.qty;
+  let finalPrice = 0;
+  if (value.id == "item1") {
+    finalPrice = qty * 2500;
+  } else if (value.id == "item2") {
+    finalPrice = qty * 1500;
+  } else if (value.id == "item3") {
+    finalPrice = qty * 1500;
+  } else if (value.id == "item4") {
+    finalPrice = qty * 1500;
+  } else if (value.id == "item5") {
+    finalPrice = qty * 3000;
+  } else if (value.id == "item6") {
+    finalPrice = qty * 1300;
   }
 
   useEffect(() => {
-      setValue(`formData[${index}].price` as any, finalPrice);
-  },[finalPrice])
+    setValue(`formData.foods.detail[${index}].price` as any, finalPrice);
+  }, [finalPrice]);
 
-  return(
-    <TableCell align="right">{finalPrice}</TableCell>
-  )
-}
-
-function Total({ fields }: any){
-
-  let total : any = 0
-  fields.map((data:any)=>{
-    // console.log("total >>",data)
-
-    total = data.price + data.price
-  })  
-  
-  return(
-    <TableCell align="right">{total}</TableCell>
-  )
+  return <TableCell align="right">{finalPrice}</TableCell>;
 }
 
 export default function MainScreen() {
-  function createRow(items: string, qty: number, price: number) {
-    return { items, qty, price };
-  }
+  const [tabValue, setTabValue] = React.useState(0);
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
 
   const {
     control,
@@ -121,90 +84,61 @@ export default function MainScreen() {
     setError,
     watch,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<FormValues2>({
     defaultValues: {
-      formData: defaultValue,
+      formData: defaultValue2,
     },
   });
 
-  const { fields, append, prepend, remove, swap, move, insert, replace, } =
-    useFieldArray({
-      control,
-      name: "formData",
-    });
+  const { fields: foodFields } = useFieldArray({
+    control,
+    name: "formData.foods.detail",
+  });
+
+  const { fields: drinkFields } = useFieldArray({
+    control,
+    name: "formData.foods.detail",
+  });
 
   const onSubmit = (data: any) => {
     console.log("form data >> ", data);
   };
 
   const watchAllFields = watch();
-  const total = watchAllFields.formData.reduce((total, item) => {
+  const total = watchAllFields.formData.foods.detail.reduce((total, item) => {
     return total + (item.price || 0);
   }, 0);
 
-
-
-
-  // append({
-  //   id: "",
-  //   item: "",
-  //   qty:null,
-  //   price:null
-  // });
+  useEffect(() => {
+    setValue(`formData.foods.total`, total);
+  }, [total]);
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Item</TableCell>
-              <TableCell align="right">Quantity</TableCell>
-              <TableCell align="right">Price</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {fields.map((field, index) => (
-              <TableRow key={field.id}>
-                <TableCell>{field.item}</TableCell>
-                <TableCell align="right">
-                  <Controller
-                    rules={{
-                      required: "必項目です！",
-                    }}
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => {
-                      return (
-                        <TextField
-                          id="outlined-number"
-                          value={value}
-                          onChange={onChange}
-                          size="small"
-                        />
-                      );
-                    }}
-                    name={`formData[${index}].qty` as any}
-                  />
-                </TableCell>
-                {/* <TableCell align="right">{field.price}</TableCell> */}
-                <Price control={control} index={index} setValue={setValue}/>
-              </TableRow>
-            ))}
-            <TableRow>
-              <TableCell colSpan={2} align="right">
-                Total
-              </TableCell>
-              <TableCell align="right">{total}</TableCell>
-              {/* <Total fields ={fields}/> */}
-            </TableRow>
-          </TableBody>
-        </Table>
-
-        {/* <Stack> */}
-
-        {/* </Stack> */}
-      </TableContainer>
-      <Box py={2} alignItems="center" justifyContent="flex-end" sx={{display:"flex"}}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Foods" {...a11yProps(0)} />
+          <Tab label="Drinks" {...a11yProps(1)} />
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={tabValue} index={0}>
+        <FoodTable
+          foodFields={foodFields}
+          control={control}
+          setValue={setValue}
+          watch={watch}
+        />
+      </CustomTabPanel>
+      <Box
+        py={2}
+        alignItems="center"
+        justifyContent="flex-end"
+        sx={{ display: "flex" }}
+      >
         <Button variant="contained" type="submit">
           export excel
         </Button>
