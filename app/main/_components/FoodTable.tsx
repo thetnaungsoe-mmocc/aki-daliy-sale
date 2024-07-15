@@ -2,7 +2,7 @@
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -21,17 +21,38 @@ import { Button, Input, Stack, TextField,Box} from "@mui/material";
 import { useEffect , useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { FormValues2 } from '../type';
+import { FormValues } from '../type';
+import { styled } from '@mui/material/styles';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.tableHeader.main,
+    color: "white",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: "#fcf4f4",
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 interface FoodTableProps {
-    foodFields: UseFieldArrayReturn<FormValues2, 'formData.foods.detail'>['fields'];
-    control: Control<FormValues2>;
+    foodFields: UseFieldArrayReturn<FormValues, 'formData.foods.detail'>['fields'];
+    control: Control<FormValues>;
     setValue: (
-      name: Path<FormValues2>,
+      name: Path<FormValues>,
       value: any,
       options?: SetValueConfig
     ) => void;
-    watch: (names?: Path<FormValues2> | Path<FormValues2>[] | string | string[]) => any;
+    watch: (names?: Path<FormValues> | Path<FormValues>[] | string | string[]) => any;
   }
 
 function Price({ control, index ,setValue}: any){
@@ -81,16 +102,16 @@ export default function FoodTable( {foodFields,control,setValue,watch} : FoodTab
     <Table sx={{ minWidth: 700 }} aria-label="spanning table">
       <TableHead>
         <TableRow>
-          <TableCell>Item</TableCell>
-          <TableCell align="right">Quantity</TableCell>
-          <TableCell align="right">Price</TableCell>
+          <StyledTableCell>Item</StyledTableCell>
+          <StyledTableCell align="right">Quantity</StyledTableCell>
+          <StyledTableCell align="right">Price</StyledTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {foodFields.map((field, index) => (
-          <TableRow key={field.id}>
-            <TableCell>{field.item}</TableCell>
-            <TableCell align="right">
+          <StyledTableRow key={field.id}>
+            <StyledTableCell>{field.item}</StyledTableCell>
+            <StyledTableCell align="right">
                 <Controller
                   rules={{
                     required: 'Required field!',
@@ -106,16 +127,15 @@ export default function FoodTable( {foodFields,control,setValue,watch} : FoodTab
                   )}
                   name={`formData.foods.detail[${index}].qty` as any}
                 />
-              </TableCell>
+              </StyledTableCell>
             <Price control={control} index={index} setValue={setValue}/>
-          </TableRow>
+          </StyledTableRow>
         ))}
         <TableRow>
-          <TableCell colSpan={2} align="right">
+          <StyledTableCell colSpan={2} align="right">
             Total
-          </TableCell>
-          <TableCell align="right">{total}</TableCell>
-          {/* <Total fields ={fields}/> */}
+          </StyledTableCell>
+          <StyledTableCell align="right">{total}</StyledTableCell>
         </TableRow>
       </TableBody>
     </Table>

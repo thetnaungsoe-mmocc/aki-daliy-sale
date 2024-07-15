@@ -12,7 +12,10 @@ const defaultTheme = (mode:boolean) => ({
         main: "#FFFFFF",
       }:{
         main : '#000000'
-      }
+      },
+      primary: {
+        main: "#fc4141",
+      },
     // mode: mode?"dark": 'dark' as any,
     // primary: {
     //   main: "#BFAF21",
@@ -23,9 +26,9 @@ const defaultTheme = (mode:boolean) => ({
     // borderColor: {
     //   main: "#ffd400",
     // },
-    // tableHeader: {
-    //   main: "#ffe77c",
-    // },
+    tableHeader: {
+      main: "#fc4141",
+    },
     // cardBg: {
     //   main: "#ffffff",
     // },

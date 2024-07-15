@@ -9,13 +9,28 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useWatch } from "react-hook-form";
-import { Button, Input, Stack, TextField, Box } from "@mui/material";
+import {
+  Button,
+  Input,
+  Stack,
+  TextField,
+  Box,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { FormValues, FormValues2, TabPanelProps } from "./type";
-import { defaultValue, defaultValue2 } from "./const";
+import { FormValues, TabPanelProps } from "./type";
+import { defaultValue } from "./const";
 import FoodTable from "./_components/FoodTable";
+import DrinkTable from "./_components/DrinkTable";
+import dayjs, { Dayjs } from "dayjs";
+import "dayjs/locale/ja";
+import utc from "dayjs/plugin/utc";
+import "dayjs/locale/ja";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -40,8 +55,6 @@ function a11yProps(index: number) {
   };
 }
 
-
-
 export default function MainScreen() {
   const [tabValue, setTabValue] = React.useState(0);
 
@@ -57,9 +70,9 @@ export default function MainScreen() {
     setError,
     watch,
     formState: { errors },
-  } = useForm<FormValues2>({
+  } = useForm<FormValues>({
     defaultValues: {
-      formData: defaultValue2,
+      formData: defaultValue,
     },
   });
 
@@ -70,7 +83,7 @@ export default function MainScreen() {
 
   const { fields: drinkFields } = useFieldArray({
     control,
-    name: "formData.foods.detail",
+    name: "formData.drinks.detail",
   });
 
   const onSubmit = (data: any) => {
@@ -90,6 +103,12 @@ export default function MainScreen() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+       
+        <Stack direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            py={2}
+            >
         <Tabs
           value={tabValue}
           onChange={handleChange}
@@ -98,10 +117,42 @@ export default function MainScreen() {
           <Tab label="Foods" {...a11yProps(0)} />
           <Tab label="Drinks" {...a11yProps(1)} />
         </Tabs>
+
+        <Controller
+          name={`formData.saleDate`}
+          control={control}
+          render={({ field: { value, onChange, onBlur } }) => {
+            return (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                label="Sale Date"
+                  format="DD/MM/YY"
+                  value={dayjs(value)}
+                  onChange={onChange}
+                  slotProps={{
+                    openPickerButton: { color: "primary" },
+                    textField : { sx : {
+                      width:"25%"
+                    }}
+                  }}
+                />
+              </LocalizationProvider>
+            );
+          }}
+        />
+        </Stack>
       </Box>
       <CustomTabPanel value={tabValue} index={0}>
         <FoodTable
           foodFields={foodFields}
+          control={control}
+          setValue={setValue}
+          watch={watch}
+        />
+      </CustomTabPanel>
+      <CustomTabPanel value={tabValue} index={1}>
+        <DrinkTable
+          drinkFields={drinkFields}
           control={control}
           setValue={setValue}
           watch={watch}

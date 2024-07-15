@@ -1,14 +1,8 @@
-export type FormValues = {
-    formData: {
-      id: string;
-      item: string;
-      qty: number | null;
-      price: number | null;
-    }[];
-  };
-
-  export type FormValues2 = {
-    formData : {foods: {
+import dayjs, { Dayjs } from "dayjs";
+ export type FormValues = {
+    formData : {
+    saleDate: Date | Dayjs
+    foods: {
       detail: {
         id: string;
         item: string;
@@ -21,7 +15,8 @@ export type FormValues = {
       detail: {
         id: string;
         item: string;
-        qty: number | null;
+        default : number | null,
+        soda : number | null
         price: number | null;
       }[];
       total: number;
