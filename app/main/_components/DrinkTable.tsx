@@ -23,27 +23,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { FormValues } from "../type";
 import { styled } from '@mui/material/styles';
+import { StyledTableCell,StyledTableRow } from "./CustomTableStyle";
 
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.tableHeader.main,
-    color: "white",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: "#fcf4f4",
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 interface DrinkTableProps {
   drinkFields: UseFieldArrayReturn<
@@ -115,13 +96,13 @@ export default function DrinkTable({
             </StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>
           </TableRow>
-          <TableRow>
-            <StyledTableCell align="right"></StyledTableCell>
-            <StyledTableCell align="center">Normal</StyledTableCell>
-            <StyledTableCell align="center">Soda</StyledTableCell>
+          {/* <TableRow  style={{background : '#f99595'}}>
+            <TableCell align="right"></TableCell>
+            <TableCell align="center">Normal</TableCell>
+            <TableCell align="center">Soda</TableCell>
 
-            <StyledTableCell align="right"></StyledTableCell>
-          </TableRow>
+            <TableCell align="right"></TableCell>
+          </TableRow> */}
         </TableHead>
         <TableBody>
           {drinkFields.map((field, index) => (
@@ -135,6 +116,7 @@ export default function DrinkTable({
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <TextField
+                      label="Normal"
                       id="outlined-number"
                       value={value}
                       onChange={(e) => onChange(Number(e.target.value))}
@@ -153,6 +135,7 @@ export default function DrinkTable({
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <TextField
+                       label="Soda"
                         id="outlined-number"
                         value={value}
                         onChange={(e) => onChange(Number(e.target.value))}

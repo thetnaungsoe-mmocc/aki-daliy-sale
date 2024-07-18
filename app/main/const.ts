@@ -35,7 +35,7 @@ export const defaultValue = {
       },
       {
         id: "food6",
-        item: "ငုံးဉကျော်",
+        item: "ငုံးဥကြော်",
         qty: 0,
         price: null,
       },
@@ -50,7 +50,7 @@ export const defaultValue = {
         item: "Ice Leamon Tea",
         normal : 0,
         soda : null,
-        price: null,
+        price: 0,
       },
       {
         id: "drink2",

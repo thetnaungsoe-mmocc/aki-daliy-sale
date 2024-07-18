@@ -9,6 +9,7 @@ declare module '@mui/material/styles' {
       borderColor :Palette['primary'];
       backgroundliner : Palette['primary'];
       tableHeader :  Palette['primary'];
+      tableRow :  Palette['primary'];
       cardBg : Palette['primary'];
     }
   
@@ -17,6 +18,7 @@ declare module '@mui/material/styles' {
       borderColor?: PaletteOptions['primary'];
       backgroundliner?: PaletteOptions['primary'];
       tableHeader?: PaletteOptions['primary'];
+      tableRow?: PaletteOptions['primary'];
       cardBg? : PaletteOptions['primary'];
     }
   }

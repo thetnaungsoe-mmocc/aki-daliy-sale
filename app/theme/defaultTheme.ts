@@ -14,20 +14,16 @@ const defaultTheme = (mode:boolean) => ({
         main : '#000000'
       },
       primary: {
-        main: "#fc4141",
+        main: "#E62D2A",
       },
-    // mode: mode?"dark": 'dark' as any,
-    // primary: {
-    //   main: "#BFAF21",
-    // },
-    // background: {
-    //   default: "#11dc6e",
-    // },
-    // borderColor: {
-    //   main: "#ffd400",
-    // },
+   
     tableHeader: {
       main: "#fc4141",
+    },
+    tableRow : mode?{
+      main: "#160d0d",
+    }:{
+      main : '#fcf4f4'
     },
     // cardBg: {
     //   main: "#ffffff",

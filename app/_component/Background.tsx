@@ -23,7 +23,7 @@ export default function Background({
     const mode = useSelector((state: RootState) => state.theme.mode)
     let bg = ""
     if(mode){
-        bg = "#000000";
+        bg = "#0a0505";
       }else{
         bg = "#FFFFFF";
       }
