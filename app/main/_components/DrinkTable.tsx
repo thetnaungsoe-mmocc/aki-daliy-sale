@@ -91,8 +91,11 @@ export default function DrinkTable({
         <TableHead>
           <TableRow>
             <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="center" colSpan={2}>
-              Quantity
+            <StyledTableCell align="center">
+              Normal
+            </StyledTableCell>
+            <StyledTableCell align="center">
+              Soda
             </StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>
           </TableRow>
