@@ -31,6 +31,8 @@ import "dayjs/locale/ja";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ExcelExport from "./_components/ExcelExport";
+
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -87,7 +89,7 @@ export default function MainScreen() {
   });
 
   const onSubmit = (data: any) => {
-    console.log("form data >> ", data);
+    ExcelExport(data)
     // console.log("form data >> ", data);s
   };
 
