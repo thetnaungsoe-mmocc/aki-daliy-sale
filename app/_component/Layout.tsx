@@ -55,7 +55,7 @@ export default function Layout({ children }: LayoutProps) {
                 }}
               >
                 <Image
-                  src="/Aki_Takoyaki_Logo.png"
+                  src="./Aki_Takoyaki_Logo.png"
                   width={60}
                   height={60}
                   alt="Picture of the author"
@@ -68,7 +68,7 @@ export default function Layout({ children }: LayoutProps) {
                   }}
                 >
                   <Image
-                    src={!mode ? "/Aki_font.png" : "/Aki_font_dark.png"}
+                    src={!mode ? "./Aki_font.png" : "./Aki_font_dark.png"}
                     width={200}
                     height={25}
                     alt="Picture of the author"
