@@ -66,7 +66,6 @@ export default function MainScreen() {
     setTabValue(newValue);
   };
 
-
   const {
     control,
     handleSubmit,
@@ -108,100 +107,100 @@ export default function MainScreen() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-         {/* for window */}
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            py={2}
-            sx={{ display: {md:"flex", xs: 'none' } }}
+        {/* for window */}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          py={2}
+          sx={{ display: { md: "flex", xs: "none" } }}
+        >
+          <Tabs
+            value={tabValue}
+            onChange={handleChange}
+            aria-label="basic tabs example"
           >
-            <Tabs
-              value={tabValue}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
-              <Tab
-                label={<Typography variant="body1">Foods</Typography>}
-                {...a11yProps(0)}
-              />
-
-              <Tab
-                label={<Typography variant="body1">Drinks</Typography>}
-                {...a11yProps(1)}
-              />
-            </Tabs>
-
-            <Controller
-              name={`formData.saleDate`}
-              control={control}
-              render={({ field: { value, onChange, onBlur } }) => {
-                return (
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Sale Date"
-                      format="DD/MM/YY"
-                      value={dayjs(value)}
-                      onChange={onChange}
-                      slotProps={{
-                        openPickerButton: { color: "primary" },
-                        textField: {
-                          sx: {
-                            width: "25%",
-                          },
-                        },
-                      }}
-                    />
-                  </LocalizationProvider>
-                );
-              }}
+            <Tab
+              label={<Typography variant="body1">Foods</Typography>}
+              {...a11yProps(0)}
             />
-          </Stack>
+
+            <Tab
+              label={<Typography variant="body1">Drinks</Typography>}
+              {...a11yProps(1)}
+            />
+          </Tabs>
+
+          <Controller
+            name={`formData.saleDate`}
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => {
+              return (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Sale Date"
+                    format="DD/MM/YY"
+                    value={dayjs(value)}
+                    onChange={onChange}
+                    slotProps={{
+                      openPickerButton: { color: "primary" },
+                      textField: {
+                        sx: {
+                          width: "25%",
+                        },
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              );
+            }}
+          />
+        </Stack>
         {/* for mobile */}
-        <Box mb={2} sx={{ display: {md:"none", xs: 'block' } }}>
-        <Tabs
-              value={tabValue}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              variant="fullWidth"
-              sx={{mb:2}}
-            >
-              <Tab
-                label={<Typography variant="caption">Foods</Typography>}
-                {...a11yProps(0)}
-              />
-
-              <Tab
-                label={<Typography variant="caption">Drinks</Typography>}
-                {...a11yProps(1)}
-              />
-            </Tabs>
-
-            <Controller
-              name={`formData.saleDate`}
-              control={control}
-              render={({ field: { value, onChange, onBlur } }) => {
-                return (
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Sale Date"
-                      format="DD/MM/YY"
-                      value={dayjs(value)}
-                      onChange={onChange}
-                      slotProps={{
-                        openPickerButton: { color: "primary" },
-                        textField: {
-                          size:'small',
-                          sx: {
-                            width: "100%",
-                          },
-                        },
-                      }}
-                    />
-                  </LocalizationProvider>
-                );
-              }}
+        <Box mb={2} sx={{ display: { md: "none", xs: "block" } }}>
+          <Tabs
+            value={tabValue}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            variant="fullWidth"
+            sx={{ mb: 2 }}
+          >
+            <Tab
+              label={<Typography variant="caption">Foods</Typography>}
+              {...a11yProps(0)}
             />
+
+            <Tab
+              label={<Typography variant="caption">Drinks</Typography>}
+              {...a11yProps(1)}
+            />
+          </Tabs>
+
+          <Controller
+            name={`formData.saleDate`}
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => {
+              return (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Sale Date"
+                    format="DD/MM/YY"
+                    value={dayjs(value)}
+                    onChange={onChange}
+                    slotProps={{
+                      openPickerButton: { color: "primary" },
+                      textField: {
+                        size: "small",
+                        sx: {
+                          width: "100%",
+                        },
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              );
+            }}
+          />
         </Box>
       </Box>
       <CustomTabPanel value={tabValue} index={0}>
@@ -226,7 +225,9 @@ export default function MainScreen() {
         justifyContent="flex-end"
         sx={{ display: "flex" }}
       >
-        <Button variant="contained" type="submit" >
+        <Button variant="contained" type="submit" sx={{
+          fontSize : {xs : 10,md:15}
+        }}>
           export excel
         </Button>
       </Box>

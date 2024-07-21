@@ -104,6 +104,7 @@ export default function FoodTable({
       <Table
         sx={{ width: { md: "100%", xs: "100%" } }}
         aria-label="spanning table"
+
       >
         <TableHead>
           <TableRow>
@@ -168,10 +169,6 @@ export default function FoodTable({
           </TableRow>
         </TableBody>
       </Table>
-
-      {/* <Stack> */}
-
-      {/* </Stack> */}
     </TableContainer>
   );
 }

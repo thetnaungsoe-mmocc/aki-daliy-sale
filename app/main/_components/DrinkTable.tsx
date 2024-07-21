@@ -87,7 +87,8 @@ export default function DrinkTable({
   },[total])
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 ,}} aria-label="spanning table">
+      {/* for pc */}
+      <Table sx={{display:{md:'table',xs:"none"}}} aria-label="spanning table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Item</StyledTableCell>
@@ -163,6 +164,101 @@ export default function DrinkTable({
           ))}
           <TableRow>
           <TableCell colSpan={3} align="right">
+            Total
+          </TableCell>
+          <TableCell align="right">{total}</TableCell>
+        </TableRow>
+        </TableBody>
+      </Table>
+
+      {/* for mobile */}
+      <Table sx={{display:{md:'none',xs:"table"},width:"100%"}} aria-label="spanning table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Item</StyledTableCell>
+            <StyledTableCell  sx={{
+                textAlign: {
+                  xs: "left",
+                  md: "right",
+                },
+              }}>
+              Quantity
+            </StyledTableCell>
+            <StyledTableCell sx={{
+                textAlign: {
+                  xs: "left",
+                  md: "right",
+                },
+              }}>Price</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {drinkFields.map((field, index) => (
+            <StyledTableRow key={field.id}>
+              <TableCell>{field.item}</TableCell>
+              <TableCell sx={{
+                textAlign: {
+                  xs: "left",
+                  md: "right",
+                },
+              }}>
+                <Controller
+                  rules={{
+                    required: "Required field!",
+                  }}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      label="Normal"
+                      id="outlined-number"
+                      value={value}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        // Validate and convert input to number if it's a valid number
+                        if (/^[+-]?(\d+(\.\d*)?|\.\d+)?$/.test(inputValue)) {
+                          onChange(Number(inputValue));
+                        }
+                      }}
+                      size="small"
+                      inputProps={{ inputMode: 'numeric' }}
+                      sx={{width:{xs:'60%',md:"30%"}}}
+                    />
+                  )}
+                  name={`formData.drinks.detail[${index}].normal` as any}
+                />
+                {field.soda != null && 
+                <Controller
+                    rules={{
+                      required: "Required field!",
+                    }}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <TextField
+                       label="Soda"
+                        id="outlined-number"
+                        value={value}
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
+                          // Validate and convert input to number if it's a valid number
+                          if (/^[+-]?(\d+(\.\d*)?|\.\d+)?$/.test(inputValue)) {
+                            onChange(Number(inputValue));
+                          }
+                        }}
+                        size="small"
+                        inputProps={{ inputMode: 'numeric' }}
+                        sx={{mt:2,width:{xs:'60%',md:"30%"}}}
+                      />
+                    )}
+                    name={`formData.drinks.detail[${index}].soda` as any}
+                  />
+                }
+              </TableCell>
+          
+              <Price control={control} index={index} setValue={setValue} />
+            </StyledTableRow>
+          ))}
+          <TableRow>
+          <TableCell colSpan={2} align="right">
             Total
           </TableCell>
           <TableCell align="right">{total}</TableCell>
