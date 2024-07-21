@@ -128,6 +128,7 @@ export default function FoodTable({
                         }
                       }}
                       size="small"
+                      inputProps={{ inputMode: 'numeric' }}
                     />
                   )}
                   name={`formData.foods.detail[${index}].qty` as any}

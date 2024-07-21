@@ -130,6 +130,7 @@ export default function DrinkTable({
                         }
                       }}
                       size="small"
+                      inputProps={{ inputMode: 'numeric' }}
                     />
                   )}
                   name={`formData.drinks.detail[${index}].normal` as any}
@@ -155,6 +156,7 @@ export default function DrinkTable({
                           }
                         }}
                         size="small"
+                        inputProps={{ inputMode: 'numeric' }}
                       />
                     )}
                     name={`formData.drinks.detail[${index}].soda` as any}
