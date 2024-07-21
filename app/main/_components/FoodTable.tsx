@@ -101,19 +101,41 @@ export default function FoodTable({
   }, [total]);
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+      <Table
+        sx={{ width: { md: "100%", xs: "100%" } }}
+        aria-label="spanning table"
+      >
         <TableHead>
           <TableRow>
             <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="right">Quantity</StyledTableCell>
-            <StyledTableCell align="right">Price</StyledTableCell>
+            <StyledTableCell
+              sx={{
+                textAlign: {
+                  xs: "left",
+                  md: "right",
+                },
+              }}
+            >
+              Quantity
+            </StyledTableCell>
+            <StyledTableCell  sx={{
+                textAlign: {
+                  xs: "left",
+                  md: "right",
+                },
+              }}>Price</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {foodFields.map((field, index) => (
             <StyledTableRow key={field.id}>
               <StyledTableCell>{field.item}</StyledTableCell>
-              <StyledTableCell align="right">
+              <StyledTableCell sx={{
+                textAlign: {
+                  xs: "left",
+                  md: "right",
+                },
+              }}>
                 <Controller
                   control={control}
                   render={({ field: { onChange, value } }) => (
@@ -128,13 +150,13 @@ export default function FoodTable({
                         }
                       }}
                       size="small"
-                      inputProps={{ inputMode: 'numeric' }}
+                      inputProps={{ inputMode: "numeric" }}
+                      sx={{width:{xs:'60%',md:"30%"}}}
                     />
                   )}
                   name={`formData.foods.detail[${index}].qty` as any}
-                 
                 />
-              </StyledTableCell>
+              </StyledTableCell >
               <Price control={control} index={index} setValue={setValue} />
             </StyledTableRow>
           ))}

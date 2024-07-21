@@ -87,7 +87,7 @@ export default function DrinkTable({
   },[total])
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+      <Table sx={{ minWidth: 700 ,}} aria-label="spanning table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Item</StyledTableCell>
@@ -99,13 +99,6 @@ export default function DrinkTable({
             </StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>
           </TableRow>
-          {/* <TableRow  style={{background : '#f99595'}}>
-            <TableCell align="right"></TableCell>
-            <TableCell align="center">Normal</TableCell>
-            <TableCell align="center">Soda</TableCell>
-
-            <TableCell align="right"></TableCell>
-          </TableRow> */}
         </TableHead>
         <TableBody>
           {drinkFields.map((field, index) => (
