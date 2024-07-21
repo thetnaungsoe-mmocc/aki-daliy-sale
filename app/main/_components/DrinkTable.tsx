@@ -122,7 +122,13 @@ export default function DrinkTable({
                       label="Normal"
                       id="outlined-number"
                       value={value}
-                      onChange={(e) => onChange(Number(e.target.value))}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        // Validate and convert input to number if it's a valid number
+                        if (/^[+-]?(\d+(\.\d*)?|\.\d+)?$/.test(inputValue)) {
+                          onChange(Number(inputValue));
+                        }
+                      }}
                       size="small"
                     />
                   )}
@@ -141,7 +147,13 @@ export default function DrinkTable({
                        label="Soda"
                         id="outlined-number"
                         value={value}
-                        onChange={(e) => onChange(Number(e.target.value))}
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
+                          // Validate and convert input to number if it's a valid number
+                          if (/^[+-]?(\d+(\.\d*)?|\.\d+)?$/.test(inputValue)) {
+                            onChange(Number(inputValue));
+                          }
+                        }}
                         size="small"
                       />
                     )}

@@ -14,6 +14,7 @@ import Switch from "@mui/material/Switch";
 import { setMode } from "../store/features/theme/theme-slice";
 import Background from "./Background";
 import { Box, Typography } from "@mui/material";
+import { icon } from "../const";
 
 type LayoutProps = Required<{
   readonly children: React.ReactNode;
@@ -46,7 +47,7 @@ export default function Layout({ children }: LayoutProps) {
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            sx={{ pb:2 }}
+            sx={{ pb: 2 }}
           >
             <Stack direction="row" alignItems="center" spacing={2}>
               <Links
@@ -54,12 +55,20 @@ export default function Layout({ children }: LayoutProps) {
                   pathname: "./",
                 }}
               >
-                <Image
-                  src="./Aki_Takoyaki_Logo.png"
-                  width={60}
-                  height={60}
-                  alt="Picture of the author"
-                />
+                <Box
+                  sx={{
+                    width: { md: 70 , xs: 40 },
+                    height: { md: 70 , xs: 40 },
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src={icon.mainLogo}
+                    alt="logo"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </Box>
               </Links>
               <Box>
                 <Links
@@ -67,14 +76,22 @@ export default function Layout({ children }: LayoutProps) {
                     pathname: "./",
                   }}
                 >
+                   <Box
+                  sx={{
+                    width: { md: 280 , xs: 160 },
+                    height: { md: 30 , xs: 15 },
+                    position: "relative",
+                  }}
+                >
                   <Image
-                    src={!mode ? "./Aki_font.png" : "./Aki_font_dark.png"}
-                    width={200}
-                    height={25}
-                    alt="Picture of the author"
+                    src={!mode ? icon.fontLogo : icon.fontDarkLogo}
+                    alt="logo"
+                    layout="fill"
+                    objectFit="cover"
                   />
+                  </Box>
                 </Links>
-                <Typography variant="body1" color="fontColor.main">
+                <Typography color="fontColor.main" sx={{ typography: { md: 'body1', xs: 'caption' } }}>
                   Daliy Sale
                 </Typography>
               </Box>
@@ -86,7 +103,7 @@ export default function Layout({ children }: LayoutProps) {
                 onChange={handleChange}
                 inputProps={{ "aria-label": "controlled" }}
               />
-              <Typography variant="body2" color="fontColor.main">
+              <Typography variant="body2" color="fontColor.main" sx={{ display: {md:"block", xs: 'none' } }}>
                 {mode ? "Dark mode" : "Light mode"}
               </Typography>
             </Stack>

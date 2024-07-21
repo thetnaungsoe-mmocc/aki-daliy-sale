@@ -16,6 +16,7 @@ import {
   TextField,
   Box,
   Typography,
+  NoSsr,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
@@ -32,7 +33,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ExcelExport from "./_components/ExcelExport";
-
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -64,6 +66,7 @@ export default function MainScreen() {
     setTabValue(newValue);
   };
 
+
   const {
     control,
     handleSubmit,
@@ -89,7 +92,7 @@ export default function MainScreen() {
   });
 
   const onSubmit = (data: any) => {
-    ExcelExport(data)
+    ExcelExport(data);
     // console.log("form data >> ", data);s
   };
 
@@ -105,44 +108,101 @@ export default function MainScreen() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-       
-        <Stack direction="row"
+         {/* for window */}
+          <Stack
+            direction="row"
             alignItems="center"
             justifyContent="space-between"
             py={2}
+            sx={{ display: {md:"flex", xs: 'none' } }}
+          >
+            <Tabs
+              value={tabValue}
+              onChange={handleChange}
+              aria-label="basic tabs example"
             >
-        <Tabs
-          value={tabValue}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Foods" {...a11yProps(0)} />
-          <Tab label="Drinks" {...a11yProps(1)} />
-        </Tabs>
+              <Tab
+                label={<Typography variant="body1">Foods</Typography>}
+                {...a11yProps(0)}
+              />
 
-        <Controller
-          name={`formData.saleDate`}
-          control={control}
-          render={({ field: { value, onChange, onBlur } }) => {
-            return (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                label="Sale Date"
-                  format="DD/MM/YY"
-                  value={dayjs(value)}
-                  onChange={onChange}
-                  slotProps={{
-                    openPickerButton: { color: "primary" },
-                    textField : { sx : {
-                      width:"25%"
-                    }}
-                  }}
-                />
-              </LocalizationProvider>
-            );
-          }}
-        />
-        </Stack>
+              <Tab
+                label={<Typography variant="body1">Drinks</Typography>}
+                {...a11yProps(1)}
+              />
+            </Tabs>
+
+            <Controller
+              name={`formData.saleDate`}
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => {
+                return (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Sale Date"
+                      format="DD/MM/YY"
+                      value={dayjs(value)}
+                      onChange={onChange}
+                      slotProps={{
+                        openPickerButton: { color: "primary" },
+                        textField: {
+                          sx: {
+                            width: "25%",
+                          },
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                );
+              }}
+            />
+          </Stack>
+        {/* for mobile */}
+        <Box mb={2} sx={{ display: {md:"none", xs: 'block' } }}>
+        <Tabs
+              value={tabValue}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              variant="fullWidth"
+              sx={{mb:2}}
+            >
+              <Tab
+                label={<Typography variant="caption">Foods</Typography>}
+                {...a11yProps(0)}
+              />
+
+              <Tab
+                label={<Typography variant="caption">Drinks</Typography>}
+                {...a11yProps(1)}
+              />
+            </Tabs>
+
+            <Controller
+              name={`formData.saleDate`}
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => {
+                return (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Sale Date"
+                      format="DD/MM/YY"
+                      value={dayjs(value)}
+                      onChange={onChange}
+                      slotProps={{
+                        openPickerButton: { color: "primary" },
+                        textField: {
+                          size:'small',
+                          sx: {
+                            width: "100%",
+                          },
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                );
+              }}
+            />
+        </Box>
       </Box>
       <CustomTabPanel value={tabValue} index={0}>
         <FoodTable

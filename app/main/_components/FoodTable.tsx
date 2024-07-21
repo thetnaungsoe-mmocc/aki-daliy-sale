@@ -17,13 +17,21 @@ import {
   Controller,
 } from "react-hook-form";
 import { useWatch } from "react-hook-form";
-import { Button, Input, Stack, TextField, Box } from "@mui/material";
+import {
+  Button,
+  Input,
+  Stack,
+  TextField,
+  Box,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { FormValues } from "../type";
 import { styled } from "@mui/material/styles";
 import { StyledTableCell, StyledTableRow } from "./CustomTableStyle";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface FoodTableProps {
   foodFields: UseFieldArrayReturn<
@@ -63,7 +71,7 @@ function Price({ control, index, setValue }: any) {
     if (qty % 2 === 0) {
       finalPrice = qty * 1250;
     } else if (qty % 2 !== 0) {
-      finalPrice = ((qty - 1) * 1250) + 1300;
+      finalPrice = (qty - 1) * 1250 + 1300;
     }
   }
 
@@ -107,19 +115,23 @@ export default function FoodTable({
               <StyledTableCell>{field.item}</StyledTableCell>
               <StyledTableCell align="right">
                 <Controller
-                  rules={{
-                    required: "Required field!",
-                  }}
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       id="outlined-number"
                       value={value}
-                      onChange={(e) => onChange(Number(e.target.value))}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        // Validate and convert input to number if it's a valid number
+                        if (/^[+-]?(\d+(\.\d*)?|\.\d+)?$/.test(inputValue)) {
+                          onChange(Number(inputValue));
+                        }
+                      }}
                       size="small"
                     />
                   )}
                   name={`formData.foods.detail[${index}].qty` as any}
+                 
                 />
               </StyledTableCell>
               <Price control={control} index={index} setValue={setValue} />
