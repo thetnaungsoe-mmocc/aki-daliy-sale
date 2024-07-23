@@ -163,7 +163,7 @@ export default function FoodTable({
           ))}
           <TableRow>
             <StyledTableCell colSpan={2} align="right">
-              Total
+              Food Total
             </StyledTableCell>
             <StyledTableCell align="right">{total}</StyledTableCell>
           </TableRow>

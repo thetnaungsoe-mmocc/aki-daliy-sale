@@ -259,7 +259,7 @@ export default function DrinkTable({
           ))}
           <TableRow>
           <TableCell colSpan={2} align="right">
-            Total
+            Drink Total
           </TableCell>
           <TableCell align="right">{total}</TableCell>
         </TableRow>

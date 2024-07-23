@@ -96,13 +96,25 @@ export default function MainScreen() {
   };
 
   const watchAllFields = watch();
-  const total = watchAllFields.formData.foods.detail.reduce((total, item) => {
-    return total + (item.price || 0);
-  }, 0);
+  const totalFood = watchAllFields.formData.foods.detail.reduce(
+    (total, item) => {
+      return total + (item.price || 0);
+    },
+    0
+  );
 
-  useEffect(() => {
-    setValue(`formData.foods.total`, total);
-  }, [total]);
+  const totalDrink = watchAllFields.formData.drinks.detail.reduce(
+    (total, item) => {
+      return total + (item.price || 0);
+    },
+    0
+  );
+
+  const allTotal = totalFood + totalDrink;
+
+  // useEffect(() => {
+  //   setValue(`formData.foods.total`, totalFood);
+  // }, [totalFood]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -130,31 +142,56 @@ export default function MainScreen() {
               {...a11yProps(1)}
             />
           </Tabs>
-
-          <Controller
-            name={`formData.saleDate`}
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => {
-              return (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Sale Date"
-                    format="DD/MM/YY"
-                    value={dayjs(value)}
-                    onChange={onChange}
-                    slotProps={{
-                      openPickerButton: { color: "primary" },
-                      textField: {
-                        sx: {
-                          width: "25%",
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{ width: "50%" }}
+            spacing={2}
+          >
+            <Controller
+              name={`formData.saleDate`}
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => {
+                return (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Sale Date"
+                      format="DD/MM/YY"
+                      value={dayjs(value)}
+                      onChange={onChange}
+                      slotProps={{
+                        openPickerButton: { color: "primary" },
+                        textField: {
+                          sx: {
+                            width: "50%",
+                          },
                         },
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              );
-            }}
-          />
+                      }}
+                    />
+                  </LocalizationProvider>
+                );
+              }}
+            />
+            <Paper
+              sx={{
+                py: 2,
+                px: 2,
+                // background: "#f8f0e9",
+                display: "flex",
+                maxWidth: "25%",
+                justifyContent: "center",
+                border: "1px solid #FECD34",
+              }}
+            >
+              <Typography align="right" variant="body2" mr={4}>
+                All Total
+              </Typography>
+              <Typography align="right" variant="body2">
+                {allTotal}
+              </Typography>
+            </Paper>
+          </Stack>
         </Stack>
         {/* for mobile */}
         <Box mb={2} sx={{ display: { md: "none", xs: "block" } }}>
@@ -175,32 +212,55 @@ export default function MainScreen() {
               {...a11yProps(1)}
             />
           </Tabs>
-
-          <Controller
-            name={`formData.saleDate`}
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => {
-              return (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Sale Date"
-                    format="DD/MM/YY"
-                    value={dayjs(value)}
-                    onChange={onChange}
-                    slotProps={{
-                      openPickerButton: { color: "primary" },
-                      textField: {
-                        size: "small",
-                        sx: {
-                          width: "100%",
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={2}
+          >
+            <Controller
+              name={`formData.saleDate`}
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => {
+                return (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Sale Date"
+                      format="DD/MM/YY"
+                      value={dayjs(value)}
+                      onChange={onChange}
+                      slotProps={{
+                        openPickerButton: { color: "primary" },
+                        textField: {
+                          size: "small",
+                          sx: {
+                            width: "50%",
+                          },
                         },
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              );
-            }}
-          />
+                      }}
+                    />
+                  </LocalizationProvider>
+                );
+              }}
+            />
+            <Paper
+              sx={{
+                p: 1.15,
+                // background: "#f8f0e9",
+                display: "flex",
+                maxWidth: "50%",
+                justifyContent: "center",
+                border: "1px solid #FECD34",
+              }}
+            >
+              <Typography align="right" variant="caption" mr={4}>
+                All Total
+              </Typography>
+              <Typography align="right" variant="caption">
+                {allTotal}
+              </Typography>
+            </Paper>
+          </Stack>
         </Box>
       </Box>
       <CustomTabPanel value={tabValue} index={0}>
@@ -219,15 +279,20 @@ export default function MainScreen() {
           watch={watch}
         />
       </CustomTabPanel>
+
       <Box
         py={2}
         alignItems="center"
         justifyContent="flex-end"
         sx={{ display: "flex" }}
       >
-        <Button variant="contained" type="submit" sx={{
-          fontSize : {xs : 10,md:15}
-        }}>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            fontSize: { xs: 10, md: 15 },
+          }}
+        >
           export excel
         </Button>
       </Box>
